@@ -1053,6 +1053,9 @@ class DataFrame(object):
         """
         if subset is None:
             jdf = self._jdf.dropDuplicates()
+        # allow parameter of one string to represent a single column
+        if type(subset) is str:
+            subset = [subset]
         else:
             jdf = self._jdf.dropDuplicates(self._jseq(subset))
         return DataFrame(jdf, self.sql_ctx)
